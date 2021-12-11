@@ -1,6 +1,7 @@
 from pycryptosat import Solver
 from math import sqrt
 import os
+import random
 solver = Solver()
 clear_terminal=lambda: os.system("clear")
 
@@ -78,6 +79,13 @@ atLeastOneIntColumn(solver, max)
 atLeastOneIntRow(solver, max)
 atLeastOneIntBlock(solver, max)
 
+def randomFirstLine(solver,max):
+    list=[]
+    for i in range(1,max):
+        list.append(i)
+    random.shuffle(list)
+    for column in range(1,max):
+        solver.add_clause([linearize(1,column,list[column-1])])
 
 def entry(solver,max):
     line=1
@@ -96,10 +104,15 @@ def entry(solver,max):
         if value>=1 and value < max:
             solver.add_clause([linearize(line,column,value)])
         elif value==42:
-            print("Complete automatically.")
+            if line==1 and column==1:
+                print("Generating random sudoku.")
+                randomFirstLine(solver,max)
+                return
+            print("Completing automatically.")
             return
 
 entry(solver,max)
+print("Resolving...")
 success,list_of_variables=solver.solve()
 clear_terminal()
 if success :
