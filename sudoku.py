@@ -53,23 +53,15 @@ def atLeastOneIntRow(solver, max):
             solver.add_clause(clause)
 
 
-def atLeastOneIntBlock(solver, max):
-    square = int(sqrt(max))
-    maxLine = square+1
-    maxColumn = square+1
-    minLine = 1
-    minColumn = 1
-    while(maxLine <= max and maxColumn <= max):
-        for k in range(1, max):
-            clause = []
-            for i in range(minLine, maxLine):
-                for j in range(minColumn, maxColumn):
-                    clause.append(linearize(i, j, k))
-            solver.add_clause(clause)
-        maxLine += square
-        maxColumn += square
-        minLine += square
-        minColumn += square
+def atLeastOneIntBlock(solver,max):
+    for x in range(1,max,3):
+        for y in range(1,max,3):
+            for k in range (1,max):
+                clause=[]
+                for i in range (x,x+3):
+                    for j in range(y,y+3):
+                        clause.append(linearize(i,j,k))
+                solver.add_clause(clause)
 
 
 max = 10
