@@ -1,6 +1,6 @@
 # sudoku-Solver
 
-To generate a sudoku, type 42.
+To generate a random sudoku, type 42.
 
 To resolve an existing sudoku, type the values at each coordinates, if the value is unknown, leave blank.
 
